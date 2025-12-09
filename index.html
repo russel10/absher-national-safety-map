@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <title>خريطة السلامة الوطنية – National Safety Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="خدمة خريطة السلامة الوطنية داخل منصة أبشر لرفع مستوى الأمان وتسريع الاستجابة للحالات الطارئة عبر خريطة تفاعلية ذكية." />
+
+    <!-- خط عربي حديث -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --absher-green: #008067;
+            --absher-light: #e6f4f1;
+            --absher-dark: #024239;
+            --bg: #f5f7fa;
+            --text-main: #1f2933;
+            --muted: #6b7280;
+            --card-bg: #ffffff;
+            --radius-lg: 18px;
+            --radius-md: 12px;
+            --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Tajawal', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #ffffff 0, #f5f7fa 45%, #e9f5f2 100%);
+            color: var(--text-main);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 16px 40px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--absher-green), var(--absher-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 22px;
+            box-shadow: 0 10px 24px rgba(0, 128, 103, 0.35);
+        }
+
+        .brand-text-title {
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .brand-text-sub {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .tagline {
+            font-size: 13px;
+            color: var(--muted);
+            text-align: left;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .hero-main {
+            background: radial-gradient(circle at top right, var(--absher-light), #ffffff 55%);
+            border-radius: var(--radius-lg);
+            padding: 24px 22px;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            background: rgba(0, 128, 103, 0.08);
+            color: var(--absher-dark);
+            margin-bottom: 10px;
+        }
+
+        .hero-pill-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: #2ecc71;
+            box-shadow: 0 0 0 5px rgba(46, 204, 113, 0.25);
+        }
+
+        .hero-title {
+            font-size: 26px;
+            font-weight: 800;
+            margin: 0 0 6px;
+            color: var(--absher-dark);
+        }
+
+        .hero-subtitle {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 18px;
+            max-width: 440px;
+        }
+
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 18px;
+        }
+
+        .badge {
+            font-size: 11px;
+            padding: 4px 9px;
+            border-radius: 999px;
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--absher-green), var(--absher-dark));
+            border-radius: 999px;
+            padding: 9px 18px;
+            font-size: 13px;
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 12px 28px rgba(0, 128, 103, 0.35);
+        }
+
+        .btn-secondary {
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-size: 12px;
+            border: 1px solid #d1d5db;
+            background: rgba(255, 255, 255, 0.9);
+            color: #374151;
+            cursor: pointer;
+        }
+
+        .hero-note {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 8px;
+        }
+
+        .hero-visual {
+            position: relative;
+        }
+
+        .card-visual {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 18px 16px;
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .map-title {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .map-badge {
+            font-size: 10px;
+            padding: 3px 7px;
+            border-radius: 999px;
+            background: var(--absher-light);
+            color: var(--absher-dark);
+        }
+
+        .map-body {
+            border-radius: 14px;
+            background: linear-gradient(135deg, #c9f0e5, #fefefe);
+            padding: 16px 12px;
+            position: relative;
+        }
+
+        .map-point {
+            position: absolute;
+            width: 9px;
+            height: 9px;
+            border-radius: 999px;
+            background: #e11d48;
+            box-shadow: 0 0 0 6px rgba(225, 29, 72, 0.25);
+        }
+
+        .map-point.green {
+            background: #16a34a;
+            box-shadow: 0 0 0 6px rgba(22, 163, 74, 0.28);
+        }
+
+        .map-point.user {
+            background: #2563eb;
+            box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.28);
+        }
+
+        .map-path {
+            position: absolute;
+            border-top: 2px dashed rgba(15, 23, 42, 0.35);
+            width: 60%;
+            right: 15%;
+            top: 38%;
+            transform: rotate(-6deg);
+        }
+
+        .map-footer {
+            margin-top: 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .sos-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 9px;
+            border-radius: 999px;
+            background: #fee2e2;
+            color: #b91c1c;
+            font-size: 11px;
+        }
+
+        .sos-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 999px;
+            background: #ef4444;
+            box-shadow: 0 0 0 5px rgba(248, 113, 113, 0.5);
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 2fr);
+            gap: 20px;
+        }
+
+        section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: var(--radius-lg);
+            padding: 18px 16px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--absher-dark);
+        }
+
+        .section-sub {
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        .list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 13px;
+        }
+
+        .list li {
+            margin-bottom: 6px;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .list li span.bullet {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .pill {
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: #f3f4f6;
+        }
+
+        .cols-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .card-mini {
+            background: #f9fafb;
+            border-radius: var(--radius-md);
+            padding: 10px 9px;
+            font-size: 11.5px;
+        }
+
+        .card-mini-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 6px;
+            border-radius: 999px;
+            font-size: 10px;
+            background: #ecfdf5;
+            color: #166534;
+        }
+
+        footer {
+            margin-top: 22px;
+            font-size: 11px;
+            color: var(--muted);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        @media (max-width: 880px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .hero-main {
+                padding: 18px 16px;
+            }
+            .hero-title {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <header>
+        <div class="brand">
+            <div class="brand-logo">ن</div>
+            <div>
+                <div class="brand-text-title">خريطة السلامة الوطنية</div>
+                <div class="brand-text-sub">خدمة مقترحة لتطبيق أبشر – وزارة الداخلية</div>
+            </div>
+        </div>
+        <div class="tagline">
+            National Safety Map<br>
+            <span style="font-size:11px;">Smart safety layer inside Absher</span>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-main">
+            <div class="hero-pill">
+                <div class="hero-pill-dot"></div>
+                فكرة مطروحة لهكاثون أبشر – تحسين تجربة الأمان للمستخدم
+            </div>
+
+            <h1 class="hero-title">خريطة السلامة الوطنية داخل أبشر</h1>
+            <p class="hero-subtitle">
+                خدمة ذكية تقترح دمج خريطة تفاعلية في تطبيق أبشر، تعرض أقرب الجهات الأمنية والصحية
+                في الوقت الفعلي، مع زر استغاثة مبسط وتنبيهات للمخاطر المحيطة، لرفع مستوى الأمان
+                وتسريع الاستجابة للحالات الطارئة.
+            </p>
+
+            <div class="hero-badges">
+                <div class="badge">أمان ذكي</div>
+                <div class="badge">تنبيهات لحظية</div>
+                <div class="badge">تكامل مع خدمات أبشر</div>
+                <div class="badge">تجربة مستخدم بسيطة</div>
+            </div>
+
+            <div class="hero-actions">
+                <button class="btn-primary">ملخص الفكرة</button>
+                <button class="btn-secondary">MVP &amp; رحلة المستخدم</button>
+            </div>
+            <div class="hero-note">
+                هذا الموقع يوضح الفكرة والمفهوم العام فقط، دون تنفيذ برمجي فعلي، للمشاركة في هاكثون أبشر.
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="card-visual">
+                <div class="map-header">
+                    <div class="map-title">معاينة الواجهة المقترحة</div>
+                    <div class="map-badge">خريطة السلامة الوطنية</div>
+                </div>
+                <div class="map-body">
+                    <div class="map-point user" style="right:45%; top:48%;"></div>
+                    <div class="map-point green" style="right:22%; top:28%;"></div>
+                    <div class="map-point" style="right:65%; top:30%;"></div>
+                    <div class="map-point green" style="right:70%; top:65%;"></div>
+                    <div class="map-point" style="right:30%; top:68%;"></div>
+                    <div class="map-path"></div>
+                    <div style="position:absolute; bottom:10px; right:14px; font-size:10px; color:#374151;">
+                        المستخدم · أقرب مركز شرطة · مستشفى طوارئ
+                    </div>
+                </div>
+                <div class="map-footer">
+                    <div class="sos-chip">
+                        <div class="sos-dot"></div>
+                        زر SOS للاستغاثة السريعة مع مشاركة الموقع
+                    </div>
+                    <div>تنبيهات لحظية · مسار آمن · رؤية أوضح للمخاطر</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <!-- المشكلة والحل -->
+        <section>
+            <div class="section-title">المشكلة الحالية</div>
+            <p class="section-sub">
+                رغم تطور الخدمات الرقمية، يواجه المستخدم صعوبة في معرفة أقرب جهة أمنية أو صحية في اللحظات الحرجة،
+                مع غياب واجهة موحّدة تنبّهه للمخاطر المحيطة أثناء التنقل.
+            </p>
+            <ul class="list">
+                <li><span class="bullet">•</span><span>تأخر الاستجابة بسبب عدم وضوح أقرب مركز أمني أو مستشفى طوارئ.</span></li>
+                <li><span class="bullet">•</span><span>عدم وجود خريطة أمنية موحدة داخل أبشر تربط المستخدم بالجهات المختصة مباشرة.</span></li>
+                <li><span class="bullet">•</span><span>صعوبة مشاركة موقع دقيق في لحظات التوتر والطوارئ.</span></li>
+            </ul>
+
+            <hr style="margin:14px 0; border:none; border-top:1px solid #e5e7eb;">
+
+            <div class="section-title">الحل المقترح</div>
+            <p class="section-sub">
+                <strong>خريطة السلامة الوطنية</strong> هي خدمة مقترحة داخل تطبيق أبشر، تقدّم طبقة أمان ذكية
+                عبر خريطة تفاعلية ترتبط بالجهات الأمنية والصحية وتوفر زر استغاثة وتنبيهات لحظية للمخاطر.
+            </p>
+            <ul class="list">
+                <li><span class="bullet">•</span><span>عرض موقع المستخدم وأقرب مركز شرطة ومستشفى في الوقت الفعلي.</span></li>
+                <li><span class="bullet">•</span><span>تنبيهات عن الحوادث، الإغلاقات، والازدحام في النطاق القريب.</span></li>
+                <li><span class="bullet">•</span><span>زر SOS بسيط لطلب مساعدة فورية مع إرسال الموقع مباشرة للجهات المختصة.</span></li>
+            </ul>
+        </section>
+
+        <!-- المزايا والأثر وMVP ورحلة المستخدم -->
+        <section>
+            <div class="section-title">المزايا والأثر المتوقع</div>
+            <div class="cols-2">
+                <div class="card-mini">
+                    <div class="card-mini-title">مزايا للمستخدم</div>
+                    <ul class="list">
+                        <li><span class="bullet">•</span><span>وصول أسرع للجهات الأمنية والصحية الأقرب.</span></li>
+                        <li><span class="bullet">•</span><span>وعي أعلى بالمخاطر أثناء التنقل.</span></li>
+                        <li><span class="bullet">•</span><span>تجربة بسيطة في لحظات الضغط والطوارئ.</span></li>
+                    </ul>
+                </div>
+                <div class="card-mini">
+                    <div class="card-mini-title">قيمة للوزارة</div>
+                    <ul class="list">
+                        <li><span class="bullet">•</span><span>تحسين سرعة الاستجابة للحالات الحرجة.</span></li>
+                        <li><span class="bullet">•</span><span>تعزيز الأمن الذكي ضمن منصة أبشر.</span></li>
+                        <li><span class="bullet">•</span><span>إبراز دور الوزارة في التحول الرقمي والاستباقي.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-title" style="margin-top:14px;">الـ MVP – الحد الأدنى من المنتج</div>
+            <p class="section-sub">
+                نسخة أولية تركّز على تقديم أبسط تجربة عملية للمستخدم لاختبار الفكرة قبل التوسع:
+            </p>
+            <ul class="list">
+                <li><span class="bullet">1)</span><span>خريطة بسيطة تعرض موقع المستخدم وأقرب مركز شرطة ومستشفى.</span></li>
+                <li><span class="bullet">2)</span><span>زر SOS مبسط يظهر خيارات: الاتصال بالطوارئ + مشاركة الموقع.</span></li>
+                <li><span class="bullet">3)</span><span>تنبيه أساسي واحد لوجود حادث أو إغلاق رئيسي في النطاق القريب.</span></li>
+            </ul>
+            <div class="pill-row">
+                <div class="pill">سهل الاختبار</div>
+                <div class="pill">قابل للتوسع</div>
+                <div class="pill">منسجم مع تطبيق أبشر</div>
+            </div>
+
+            <div class="section-title" style="margin-top:16px;">رحلة المستخدم المختصرة</div>
+            <ul class="list">
+                <li><span class="bullet">1)</span><span>فتح أبشر → اختيار خدمة "خريطة السلامة الوطنية".</span></li>
+                <li><span class="bullet">2)</span><span>تحديد الموقع تلقائيًا وعرض أقرب الجهات الأمنية والصحية.</span></li>
+                <li><span class="bullet">3)</span><span>استكشاف الخريطة ومعرفة المسافة والخيارات المتاحة.</span></li>
+                <li><span class="bullet">4)</span><span>استلام تنبيه عند وجود خطر أو حادث قريب.</span></li>
+                <li><span class="bullet">5)</span><span>في حالة الطوارئ: الضغط على زر SOS وطلب المساعدة مع مشاركة الموقع.</span></li>
+            </ul>
+
+            <div style="margin-top:10px;" class="tag">
+                تجربة مختصرة – أثر أمني كبير – قابلية عالية للتطبيق
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div>
+            هذا الرابط يُستخدم كموقع تعريفي لفكرة
+            <strong>خريطة السلامة الوطنية</strong>
+            المقترحة لتطوير تطبيق أبشر ضمن الهكاثون.
+        </div>
+        <div>
+            يمكن تزويد الفريق المنظم بنسخة من العرض التقديمي وشرح تفصيلي عند الحاجة.
+        </div>
+    </footer>
+
+</div>
+</body>
+</html>
